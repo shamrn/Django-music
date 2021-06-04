@@ -5,7 +5,13 @@
 {% block content %}
     <section>
         <div class="container container-service">
-
+            <ul class="service-item">
+                <li class="service-link"><a href="{% url 'profile_update' %}">Редактировать профиль</a></li>
+                <li class="service-link"><a href="#">Добавить новый трек</a></li>
+            </ul>
+            <div class="service-music-list">
+                <h4>Ваши последние добавленные треки</h4>
+            </div>
         </div>
     </section>
 {% endblock %}

@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %} {% endblock %}
+
+{% block content %}
+    <section>
+        <div class="container container-profile_update">
+            <form action="." method="post">
+                {% for field in form %}
+                <p>{{ field }} {% if field.errors %} <small>{{ firld.errors }}</small>{% endif %}</p>
+                {% endfor %}
+                {% csrf_token %}
+                <input class="submit-update" type="submit" value="Сохранить">
+            </form>
+        </div>
+    </section>
+
+{% endblock %}

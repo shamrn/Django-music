@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-m^!d2b(l@&$o@b=gau_2ng^ead!52%t9fan%&5m=(a7k8-407q
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'service.apps.ServiceConfig',
+    'social_django',
+
 ]
 
 MIDDLEWARE = [
@@ -105,7 +107,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ru'
 
 TIME_ZONE = 'UTC'
 
@@ -133,3 +135,19 @@ STATICFILES_DIRS = [
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
+
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'service'
+LOGOUT_URL = ''
+
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'social_core.backends.telegram.TelegramAuth',
+    'social_core.backends.vk.VKOAuth2',
+]
+
+SOCIAL_AUTH_VK_OAUTH2_KEY = '7795923'
+SOCIAL_AUTH_VK_OAUTH2_SECRET = 'FV6Sys4YgArFK2VPRVX9'
+
+SOCIAL_AUTH_TELEGRAM_BOT_TOKEN = '1646237731:AAH5dhG5184y93xk7KHbonEpuOSUHBlx7lk'
