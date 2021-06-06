@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'service.apps.ServiceConfig',
     'social_django',
+    'sorl.thumbnail',
+    'pages.apps.PagesConfig',
 
 ]
 

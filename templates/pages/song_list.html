@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load thumbnail %}
+{% block title %} {% endblock %}
+
+
+{% block content %}
+
+    <section>
+        <div class="container container-song-list">
+             <ul class="song-item">
+                    {% for song in songs %}
+                    <li class="song-link">
+                        {% thumbnail song.image "450x450" crop="center" as im %}
+                            <img class='song-img' src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
+                        {% endthumbnail %}
+                        <div class="song-data">
+                            <h5 class="song-name">{{ song.name }}</h5>
+                            <p>Лайков: {{ song.like }}</p>
+                            <p>Дизлайков: {{ song.dislike }}</p>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+        </div>
+    </section>
+
+{% endblock %}

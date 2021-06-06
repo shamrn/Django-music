@@ -48,34 +48,40 @@ ul{
 .container-profile_update{
     text-align:center;
 }
-.input-update{
+input, select{
     background-color:rgb(201, 201, 201);
     border-radius:7px;
     border:none;
     text-align:center;
 }
-.submit-update{
-    background-color:rgb(201, 201, 201);
-    border-radius:7px;
-    border:none;
-}
+
 
 /*      SECTION SERVICE   */
 
 .container-service{
     text-align:center;
 }
-.service-item{
+
+.data-edit{
     display:flex;
 }
-.service-link{
-    width:35%;
+.service-item-data{
+    width:40%;
     margin:auto;
+}
+.service-item-edit{
+    width:40%;
+    margin:auto;
+}
+
+.service-link{
+    margin-bottom:3vw;
     padding:2vw 0 2vw 0;
     border-radius:10px;
     -webkit-box-shadow: 0px 5px 10px 2px rgba(255, 200, 0, 0.4);
     -moz-box-shadow: 0px 5px 10px 2px rgba(255, 200, 0, 0.4);
     box-shadow: 0px 5px 10px 2px rgba(255, 200, 0, 0.4);
+    cursor: pointer;
 }
 
 .service-link:hover{
@@ -83,7 +89,42 @@ ul{
     box-shadow: 0px 0px transparent, 0px 5px 10px rgba(255, 200, 0, 0.25);
 }
 
+
+
+.service-link-not:hover:after {
+    content: attr(data-name);
+    display:block;
+    color:rgb(255, 200, 0);
+    padding: 3px 0;
+    white-space: pre-line;
+    font-size:1.2vw;
+    width: 100%;
+}
 .service-music-list{
     margin-top:7vw;
+}
+select{
+    width:18vw;
+}
+/*   SECTION SONG  */
+
+.container-song{
+    text-align:center;
+}
+
+textarea{
+    background-color:rgb(201, 201, 201);
+    border-radius:7px;
+    border:none;
+}
+
+.song-item{
+    margin-top:6vw;
+}
+
+.song-link{
+    display:flex;
+    padding-bottom:2vw;
+    border-bottom:1px  rgb(201, 201, 201) solid;
 }
 

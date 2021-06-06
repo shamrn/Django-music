@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <section>
+    <div class="container container-song">
+        <form action="." method="post" enctype="multipart/form-data">
+          {% for field in form %}
+            <strong>{{ field.label }}</strong>
+            <p>{{ field }}</p>
+          {% endfor %}
+          {% csrf_token %}
+          <input type="submit" value="Сохранить">
+        </form>
+    </div>
+  </section>
+
+{% endblock %}

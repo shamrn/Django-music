@@ -1,16 +1,55 @@
 {% extends 'base.html' %}
+{% load thumbnail %}
 
 {% block title %} {% endblock %}
 
 {% block content %}
     <section>
         <div class="container container-service">
-            <ul class="service-item">
-                <li class="service-link"><a href="{% url 'profile_update' %}">Редактировать профиль</a></li>
-                <li class="service-link"><a href="#">Добавить новый трек</a></li>
-            </ul>
+            <div class="data-edit">
+                <div class="service-item-data">
+                    <h4>Ваш профиль</h4>
+                    <p>Имя:{% if profile.last_name %}{{ profile.last_name }}{% else %}не указано{% endif %}</p>
+                    <p>Фамилия:{% if profile.first_name %}{{ profile.first_name }}{% else %}не указана {% endif %}</p>
+                    <p>instagram: {% if profile.instagram %}{{ profile.instagram}}{% else %} не указан {% endif %}</p>
+                    <p>telegram: {{ profile.telegram }}</p>
+                    <h5>Инвентарь:</h5>
+                    <ul>
+                        {% for item in profile.inventory.all %}
+                        <li>{{ item }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <ul class="service-item-edit">
+                    <li class="service-link" onclick="document.location = '{% url 'profile_update' %}'">Редактировать профиль</li>
+                    {% if acces_create_song %}
+                    <li class="service-link service-link-not"
+                        data-name="Для начала вам необходимо:{{ acces_create_song }}">
+                        Добавить новый трек
+                    </li>
+                    {% else %}
+                    <li class="service-link" onclick="document.location = '{% url 'song_create' %}'">Добавить новый трек</li>
+                    {% endif %}
+                </ul>
+            </div>
+
             <div class="service-music-list">
                 <h4>Ваши последние добавленные треки</h4>
+                <ul class="song-item">
+                    {% for song in songs %}
+                    <li class="song-link">
+                        {% thumbnail song.image "350x350" crop="center" as im %}
+                            <img class='song-img' src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
+                        {% endthumbnail %}
+                        <div class="song-data">
+                            <h5 class="song-name">{{ song.name }}</h5>
+                            <p>Лайков: {{ song.like }}</p>
+                            <p>Дизлайков: {{ song.dislike }}</p>
+                            <a href="{% url 'song_update' song.slug %}">Редактировать</a>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
             </div>
         </div>
     </section>

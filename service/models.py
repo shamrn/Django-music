@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.text import slugify
 
 class Profile(models.Model):
     telegram = models.CharField(max_length=150)
@@ -7,6 +8,27 @@ class Profile(models.Model):
     instagram = models.CharField(max_length=150,null=True,blank=True)
 
 class MusicalInventory(models.Model):
-    profile = models.ForeignKey(Profile,on_delete=models.CASCADE)
+    profile = models.ForeignKey(Profile,related_name='inventory',on_delete=models.CASCADE)
     name = models.CharField(max_length=200)
 
+    def __str__(self):
+        return self.name
+
+class Song(models.Model):
+    profile = models.ForeignKey(Profile,blank=True, on_delete=models.CASCADE)
+    name = models.CharField(max_length=200,verbose_name='Название трека')
+    slug = models.SlugField()
+    link = models.URLField(verbose_name='Ссылка на трек')
+    inventory = models.ManyToManyField(MusicalInventory,verbose_name='Инвентарь')
+    image = models.ImageField(upload_to=f'image/',blank=True,verbose_name='Изображение')
+    body = models.TextField(blank=True,null=True,verbose_name='Описание')
+    like = models.SmallIntegerField(default=0)
+    dislike = models.SmallIntegerField(default=0)
+    date_created = models.DateTimeField(auto_now_add=True,null=True,blank=True)
+
+    class Meta:
+        ordering = ('date_created',)
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.name)
+        super(Song, self).save(*args, **kwargs)
