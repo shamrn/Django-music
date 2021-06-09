@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load thumbnail %}
+
+{% block title %} {% endblock %}
+
+
+{% block content %}
+   <section>
+      <div class="song-iframe">{% autoescape off %} {{ song.iframe_sound }} {% endautoescape %}</div>
+      <div class="container container-song-detail">
+         <div class="song-description">
+            <h4>Описание</h4>
+            <p>{{ song.body }}</p>
+         </div>
+         <div class="song-inventory">
+            <h4>Инвентарь использовался</h4>
+            {% for item in song.inventory.all %}
+            <small>{{ item }}</small><br>
+            {% endfor %}
+         </div>
+      </div>
+
+   </section>
+
+
+{% endblock %}

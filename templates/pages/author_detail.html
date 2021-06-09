@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load thumbnail %}
+{% block title %} {% endblock %}
+
+
+{% block content %}
+    <section>
+        <div class="container container-author-detail">
+            <div class="author-info">
+                 <div class="author-data">
+                    <h4>Информация об авторе</h4>
+                     <p>Имя: {{ author.first_name }}</p>
+                     <p>Фамилия: {{ author.last_name }}</p>
+                     <p><a href="http://instagram.com/{{ author.instagram }}">Instagram: {{ author.instagram }}</a></p>
+                     <p><a href="tg://resolve?domain={{ author.telegram }}">Telegram: {{ author.telegram }}</a></p>
+                     {% if permission_edit %}<a href="{% url 'profile_update' %}">Редактировать</a> {% endif %}
+                </div>
+                <div class="author-inventory">
+                    <h4>Используемый инвентарь</h4>
+                    {% for item in author.inventory.all %}
+                         <small >{{ item }}</small><br>
+                    {% endfor %}
+                    {% if permission_edit %}<a href="{% url 'inventory_update' %}">Редактировать</a>{% endif %}
+                 </div>
+            </div>
+
+            <div class="author-songs">
+                <h4>Все треки автора</h4>
+                 <ul class="song-item">
+                    {% for song in songs %}
+                    <li class="song-link  song-link-main" onclick="document.location = '{% url 'song_detail' song.slug %}'">
+                        {% thumbnail song.image "350x350" crop="center" as im %}
+                            <img class='song-img' src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
+                        {% endthumbnail %}
+                        <div class="song-data">
+                            <h5 class="song-name">{{ song.name }}</h5>
+                            <p class="song-like">Лайков:{{ song.like }} Дизлайков:{{ song.dislike }}</p>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

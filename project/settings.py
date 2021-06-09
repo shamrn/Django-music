@@ -32,8 +32,8 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
     'django.contrib.auth',
+    'django.contrib.admin',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
@@ -140,8 +140,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'service'
-LOGOUT_URL = ''
-
+LOGOUT_REDIRECT_URL = 'service'
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',

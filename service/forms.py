@@ -1,7 +1,5 @@
 from django import forms
-from django.forms import inlineformset_factory, modelformset_factory
-
-from .models import Profile,MusicalInventory,Song
+from .models import Profile,MusicalInventory
 
 
 class UserUpdateForm(forms.ModelForm):
@@ -20,9 +18,11 @@ class UserUpdateForm(forms.ModelForm):
 
 class UserInventoryForm(forms.ModelForm):
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['name'].widget.attrs.update({'class':'input-update','placeholder':'Инвентарь'})
+
     class Meta:
         model = MusicalInventory
         fields = ('name',)
 
-
-UserInventaryFormset = modelformset_factory(Profile,extra=1,form=UserUpdateForm,fields = ('telegram','first_name','last_name','instagram'))

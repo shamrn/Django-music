@@ -14,14 +14,13 @@
                     <p>instagram: {% if profile.instagram %}{{ profile.instagram}}{% else %} не указан {% endif %}</p>
                     <p>telegram: {{ profile.telegram }}</p>
                     <h5>Инвентарь:</h5>
-                    <ul>
-                        {% for item in profile.inventory.all %}
-                        <li>{{ item }}</li>
+                    {% for item in profile.inventory.all %}
+                    <small>{{ item }} </small><br>
                         {% endfor %}
-                    </ul>
                 </div>
                 <ul class="service-item-edit">
                     <li class="service-link" onclick="document.location = '{% url 'profile_update' %}'">Редактировать профиль</li>
+                     <li class="service-link" onclick="document.location = '{% url 'inventory_update' %}'">Редактировать инвентарь</li>
                     {% if acces_create_song %}
                     <li class="service-link service-link-not"
                         data-name="Для начала вам необходимо:{{ acces_create_song }}">
@@ -43,9 +42,10 @@
                         {% endthumbnail %}
                         <div class="song-data">
                             <h5 class="song-name">{{ song.name }}</h5>
-                            <p>Лайков: {{ song.like }}</p>
-                            <p>Дизлайков: {{ song.dislike }}</p>
-                            <a href="{% url 'song_update' song.slug %}">Редактировать</a>
+                            <small class="song-like">Лайков:{{ song.like }}</small>
+                            <small class="song-dislike">Дизлайков:{{ song.dislike }}</small>
+                            <a href="{% url 'song_update' song.pk %}">Редактировать</a>
+                            <a href="{% url 'song_delete' song.pk %}">Удалить</a>
                         </div>
                     </li>
                     {% endfor %}

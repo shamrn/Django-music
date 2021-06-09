@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} {% endblock %}
+
+{% block content %}
+<section xmlns="http://www.w3.org/1999/html">
+        <div class="container container-profile_update">
+            <form  action="." method="post">
+                {{ formset.as_p }}
+                {% csrf_token %}
+                <input type="submit" name="exit"  value="Сохранить и выйти">
+                <input class="submit-update" type="submit" value="Сохранить и добавить поле">
+            </form>
+        </div>
+
+    </section>
+
+{% endblock %}

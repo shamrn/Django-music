@@ -1,26 +1,55 @@
 {% extends 'base.html' %}
 {% load thumbnail %}
 {% block title %} {% endblock %}
-
+{% load static %}
 
 {% block content %}
 
-    <section>
+<section xmlns="http://www.w3.org/1999/html">
         <div class="container container-song-list">
+            <div class="filter-song">
+                <a class="link-filter-song" href="{% url 'song_list' 'new' %}">новые треки</a>
+                <a class="link-filter-song" href="{% url 'song_list' 'like' %}">по количеству лайков</a>
+            </div>
              <ul class="song-item">
                     {% for song in songs %}
-                    <li class="song-link">
+                    <li class="song-link song-link-main" onclick="document.location = '{% url 'song_detail' song.slug %}'">
                         {% thumbnail song.image "450x450" crop="center" as im %}
                             <img class='song-img' src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
                         {% endthumbnail %}
-                        <div class="song-data">
-                            <h5 class="song-name">{{ song.name }}</h5>
-                            <p>Лайков: {{ song.like }}</p>
-                            <p>Дизлайков: {{ song.dislike }}</p>
+                        <div class="song-data-list">
+                            <h5 class="song-name-list">{{ song.name }}</h5>
+                            <p>
+                                <a class="song-author-list" href="{% url 'author_detail' song.profile.pk %}">
+                                    Автор: {{ song.profile.first_name }} {{ song.profile.last_name }}
+                                </a>
+                            </p>
+                            <div class="song-like-dislike">
+                                <a id="like" href="{% url 'like' 'like' song.pk %}">
+                                    <img src="{% static 'img/like.png' %}">
+                                    <strong>{{ song.like }}</strong>
+                                </a>
+
+                                <a href="{% url 'like' 'dislike' song.pk %}">
+                                 <img src="{% static 'img/dislike.png' %}">
+                                    <strong>{{ song.dislike }}</strong>
+                                </a>
+                            </div>
                         </div>
                     </li>
                     {% endfor %}
                 </ul>
+             <div class="page">
+            {% if page_obj.has_previous %}
+                <a class='page-link' href="?page=1">&laquo; Начало</a>
+                <a class='page-link' href="?page={{ page_obj.previous_page_number }}">&laquo;Назад </a>
+            {% endif %}
+
+            {% if page_obj.has_next %}
+                <a class='page-link' href="?page={{ page_obj.next_page_number }}">Вперед &raquo;</a>
+            {% endif %}
+        </div>
+    </section>
         </div>
     </section>
 
