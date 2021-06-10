@@ -145,10 +145,8 @@ LOGOUT_REDIRECT_URL = 'service'
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
     'social_core.backends.telegram.TelegramAuth',
-    'social_core.backends.vk.VKOAuth2',
 ]
 
-SOCIAL_AUTH_VK_OAUTH2_KEY = '7795923'
-SOCIAL_AUTH_VK_OAUTH2_SECRET = 'FV6Sys4YgArFK2VPRVX9'
+
 
 SOCIAL_AUTH_TELEGRAM_BOT_TOKEN = '1646237731:AAH5dhG5184y93xk7KHbonEpuOSUHBlx7lk'

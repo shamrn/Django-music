@@ -16,6 +16,11 @@ class MusicalInventory(models.Model):
     def __str__(self):
         return self.name
 
+    def delete(self, *args, **kwargs):
+        if self.song_set.count() > 0:
+            return "Вы не можете удалить, в треках используется инвентарь"
+        else:
+            super(MusicalInventory, self).delete(*args, **kwargs)
 
 class Song(models.Model):
     profile = models.ForeignKey(Profile, blank=True, on_delete=models.CASCADE)
