@@ -1,8 +1,10 @@
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.text import slugify
 
 
 class Profile(models.Model):
+    """Таблица профиля"""
     telegram = models.CharField(max_length=150)
     first_name = models.CharField(max_length=150, null=True)
     last_name = models.CharField(max_length=150, null=True)
@@ -10,6 +12,7 @@ class Profile(models.Model):
 
 
 class MusicalInventory(models.Model):
+    """Таблица инвентаря пользователя"""
     profile = models.ForeignKey(Profile, related_name='inventory', on_delete=models.CASCADE)
     name = models.CharField(max_length=200, verbose_name='Название инвентаря')
 
@@ -18,11 +21,12 @@ class MusicalInventory(models.Model):
 
     def delete(self, *args, **kwargs):
         if self.song_set.count() > 0:
-            return "Вы не можете удалить, в треках используется инвентарь"
+            raise ValidationError({'name': 'Инвентарь добавлен в трек, удаление запрещено'})
         else:
             super(MusicalInventory, self).delete(*args, **kwargs)
 
 class Song(models.Model):
+    """Таблица трека"""
     profile = models.ForeignKey(Profile, blank=True, on_delete=models.CASCADE)
     name = models.CharField(max_length=200, verbose_name='Название трека')
     slug = models.SlugField()
@@ -44,6 +48,7 @@ class Song(models.Model):
 
 
 class Like(models.Model):
+    """Таблица лайков"""
     CHOICES_ACTIONS = (
         ('like', 'like'),
         ('dislike', 'dislike'),

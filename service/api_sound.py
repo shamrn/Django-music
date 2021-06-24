@@ -1,7 +1,7 @@
-
 import requests
-from django.contrib import messages
-from django.http import HttpResponseRedirect
+import logging
+from django.core.exceptions import ValidationError
+#logging.basicConfig(filename="sample.log", level=logging.INFO)
 
 
 def get_iframe(request,link):
@@ -14,7 +14,7 @@ def get_iframe(request,link):
     }
     response = requests.post('https://soundcloud.com/oembed', data=data)
     if response.status_code != 200:
-        messages.error(request,'Ссылка некорректна')
-        return 'error in the link'
+        pass
+        #raise ValidationError({'iframe_sound': ''})
     else:
         return response.json()['html']

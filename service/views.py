@@ -1,5 +1,6 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
+from django.forms.utils import ErrorList
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse_lazy
@@ -54,9 +55,13 @@ def inventory_update(request):
     if request.method == 'POST':
         formset = inventory_formset(request.POST, instance=profile)
         if formset.is_valid():
-            formset.save()
+            try:
+                formset.save()
+            except:
+                formset._errors["name"] = ErrorList([u"Инвентарь добавлен в трек, удаление запрещено"])
+
         # У пользователя на выбор 2 кнопки 'Сохранить и выйти' и 'сохранить и добавить поле', если пользователь
-        # нажимает 'сохранить и выйти' в запрос добавляется exit , крч костыль
+        # нажимает 'сохранить и выйти' в запрос добавляется exit
         if 'exit' in request.POST:
             return redirect('service')
         else:
