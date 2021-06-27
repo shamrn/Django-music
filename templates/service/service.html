@@ -6,6 +6,15 @@
 {% block content %}
     <section>
         <div class="container container-service">
+             {% if messages %}
+                <ul class="messages">
+                    {% for message in messages %}
+                        <li>
+                            {{ message|safe }}
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
             <div class="data-edit">
                 <div class="service-item-data">
                     <h4>Ваш профиль</h4>

@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.forms.utils import ErrorList
@@ -57,8 +58,8 @@ def inventory_update(request):
         if formset.is_valid():
             try:
                 formset.save()
-            except:
-                formset._errors["name"] = ErrorList([u"Инвентарь добавлен в трек, удаление запрещено"])
+            except: # если инвентарь добавлен в трек,рейзитса ошибка , и мы отправляем пользователю информационное сообщение
+                messages.error(request,"Инвентарь добавлен в трек, удаление запрещено")
 
         # У пользователя на выбор 2 кнопки 'Сохранить и выйти' и 'сохранить и добавить поле', если пользователь
         # нажимает 'сохранить и выйти' в запрос добавляется exit
@@ -91,9 +92,13 @@ class SongCreateView(SuccessMessageMixin, LoginRequiredMixin, CreateView):
         instance = form.save(commit=False)
         instance.profile = profile
         # Парсим iframe по ссылке
-        instance.iframe_sound = get_iframe(self.request,
-                                           instance.link)
-        instance.save()
+        try:
+            iframe = get_iframe(instance.link)
+            instance.iframe_sound = iframe
+            instance.save()
+        except: # ли ссылка не корректна, выводим ошибку для поля,
+            form._errors["link"] = ErrorList([u"Ссылка не корректна"])
+            return super(SongCreateView, self).form_invalid(form)
         return super(SongCreateView, self).form_valid(form)
 
 

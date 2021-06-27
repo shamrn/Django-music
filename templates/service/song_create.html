@@ -6,7 +6,7 @@
         <form action="." method="post" enctype="multipart/form-data">
           {% for field in form %}
             <strong>{{ field.label }}</strong>
-            <p>{{ field }}</p>
+            <p>{% if field.errors %} <small>{{ field.errors }}</small>{% endif %}{{ field }} </p>
           {% endfor %}
           {% csrf_token %}
           <input type="submit" value="Сохранить">

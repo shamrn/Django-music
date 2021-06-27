@@ -3,8 +3,17 @@
 {% block title %} {% endblock %}
 
 {% block content %}
-<section xmlns="http://www.w3.org/1999/html">
+<section>
         <div class="container container-profile_update">
+            {% if messages %}
+                <ul class="messages">
+                    {% for message in messages %}
+                        <li>
+                            {{ message|safe }}
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
             <form  action="." method="post">
                 {{ formset.as_p }}
                 {% csrf_token %}
